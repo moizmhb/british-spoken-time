@@ -228,3 +228,141 @@ src/
 
 ---
 
+---
+
+## Design Patterns
+
+### **1. Strategy Pattern (Implemented)**
+
+**Intent:**  
+Encapsulates time-formatting logic per locale (e.g., British, German, Czech). Allows adding new locale rules without modifying existing code.
+
+**Implementation:**
+```java
+public interface TimeFormatterStrategy {
+    String formatTime(int hour, int minute);
+}
+```
+**British Implementation:**
+```java
+public class BritishTimeFormatter implements TimeFormatterStrategy {
+    @Override
+    public String formatTime(int hour, int minute) {
+        // Implements British-specific rules (e.g., “quarter past”, “half past”)
+    }
+}
+```
+
+**Advantages:**
+- Complies with **Open/Closed Principle (OCP)**
+- Supports easy extension for new locales
+- Keeps code modular and testable
+
+---
+
+### **2. Factory Pattern (Extensible)**
+
+**Intent:**  
+Centralizes creation of appropriate formatter strategy based on locale.
+
+**Implementation:**
+```java
+public class TimeFormatterFactory {
+    public static TimeFormatterStrategy getFormatter(String locale) {
+        switch (locale.toLowerCase()) {
+            case "de": return new GermanTimeFormatter();
+            case "cz": return new CzechTimeFormatter();
+            default: return new BritishTimeFormatter();
+        }
+    }
+}
+```
+
+**Advantages:**
+- Isolates object creation
+- Allows dynamic strategy selection
+- Reduces coupling
+
+---
+
+# SOLID Principles in British Spoken Time API
+
+This project adheres to **SOLID principles** to ensure clean, extensible, and maintainable code architecture.  
+Each principle is applied through clear separation of concerns, dependency injection, and interface-driven design.
+
+---
+
+## 1. **Single Responsibility Principle (SRP)**
+**Definition:** A class should have one and only one reason to change.
+
+**Implementation:**
+- **`TimeController`** → Handles REST endpoints and HTTP interactions only.
+- **`TimeService`** → Orchestrates business logic and delegates to the strategy.
+- **`BritishTimeFormatter`** → Converts digital time into spoken form (British rules).
+- **`InvalidTimeFormatException`** → Encapsulates input validation errors.
+
+**Benefit:**  
+Each component focuses on a single responsibility, improving testability and clarity.
+
+---
+
+## 2. **Open/Closed Principle (OCP)**
+**Definition:** Software entities should be open for extension, but closed for modification.
+
+**Implementation:**
+- The **Strategy Pattern** allows adding new locale-based formatters (e.g., `GermanTimeFormatter`, `CzechTimeFormatter`)  
+  without changing existing code.
+- The system is extensible through new implementations of `TimeFormatterStrategy`.
+
+**Benefit:**  
+Supports new locales and formats without altering stable, tested logic.
+
+---
+
+## 3. **Liskov Substitution Principle (LSP)**
+**Definition:** Objects of a superclass should be replaceable with objects of its subclasses without affecting correctness.
+
+**Implementation:**
+- All formatters (British, etc ) implement the same interface:
+  ```java
+  public interface TimeFormatterStrategy {
+      String formatTime(int hour, int minute);
+  }
+
+
+## 4. **Interface Segregation Principle (ISP)**
+**Definition:** Clients should not be forced to depend on interfaces they do not use.
+
+**Implementation:**
+- The `TimeFormatterStrategy` interface exposes only one focused method:
+  ```java
+  String formatTime(int hour, int minute);
+  ```
+- Keeps the interface small, specific, and easy to implement.
+
+**Benefit:**  
+Minimizes unnecessary dependencies and simplifies testing.
+
+---
+
+## 5. **Dependency Inversion Principle (DIP)**
+**Definition:** High-level modules should depend on abstractions, not on concrete implementations.
+
+**Implementation:**
+- `TimeService` depends on the abstraction `TimeFormatterStrategy`, not a concrete `BritishTimeFormatter`.
+- Spring Boot injects the appropriate strategy bean at runtime.
+
+**Example:**
+```java
+@Service
+public class TimeService {
+    private final TimeFormatterStrategy formatter;
+
+    public TimeService(TimeFormatterStrategy formatter) {
+        this.formatter = formatter;
+    }
+}
+```
+
+**Benefit:**  
+Improves modularity, allows mocking in tests, and promotes flexibility in swapping implementations.

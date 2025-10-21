@@ -1,17 +1,15 @@
 package com.example.britishtime.service;
 
 import com.example.britishtime.exception.InvalidTimeException;
-import com.example.britishtime.formatter.TimeFormatter;
+import com.example.britishtime.formatter.TimeFormatterStrategy;
 import com.example.britishtime.formatter.TimeFormatterFactory;
 import com.example.britishtime.model.TimeResponse;
 import org.springframework.stereotype.Service;
 
-import java.time.format.DateTimeParseException;
-
 @Service
 public class TimeService {
 
-    private final TimeFormatter formatter;
+    private final TimeFormatterStrategy formatter;
 
     public TimeService(TimeFormatterFactory factory) {
         // Currently only British formatter exists; factory allows extensibility.

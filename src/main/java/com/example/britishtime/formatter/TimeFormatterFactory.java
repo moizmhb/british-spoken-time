@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class TimeFormatterFactory {
 
-    public TimeFormatter getFormatter(String key) {
+    public TimeFormatterStrategy getFormatter(String key) {
         if (key == null || key.isBlank() || key.equalsIgnoreCase("british")) {
             return new BritishTimeFormatter();
         }
