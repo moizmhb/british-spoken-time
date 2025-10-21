@@ -301,8 +301,6 @@ Each principle is applied through clear separation of concerns, dependency injec
 - **`BritishTimeFormatter`** → Converts digital time into spoken form (British rules).
 - **`InvalidTimeFormatException`** → Encapsulates input validation errors.
 
-**Benefit:**  
-Each component focuses on a single responsibility, improving testability and clarity.
 
 ---
 
@@ -314,8 +312,6 @@ Each component focuses on a single responsibility, improving testability and cla
   without changing existing code.
 - The system is extensible through new implementations of `TimeFormatterStrategy`.
 
-**Benefit:**  
-Supports new locales and formats without altering stable, tested logic.
 
 ---
 
@@ -340,8 +336,7 @@ Supports new locales and formats without altering stable, tested logic.
   ```
 - Keeps the interface small, specific, and easy to implement.
 
-**Benefit:**  
-Minimizes unnecessary dependencies and simplifies testing.
+
 
 ---
 
@@ -363,6 +358,3 @@ public class TimeService {
     }
 }
 ```
-
-**Benefit:**  
-Improves modularity, allows mocking in tests, and promotes flexibility in swapping implementations.
