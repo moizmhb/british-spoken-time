@@ -5,7 +5,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-class BritishTimeFormatterTest {
+class BritishTimeFormatterStrategyTest {
 
     private final BritishTimeFormatter formatter = new BritishTimeFormatter();
 

@@ -2,7 +2,7 @@ package com.example.britishtime.formatter;
 
 import java.util.Map;
 
-public class BritishTimeFormatter implements TimeFormatter {
+public class BritishTimeFormatter implements TimeFormatterStrategy {
 
     private static final Map<Integer, String> SMALL = Map.ofEntries(
             Map.entry(0, "zero"), Map.entry(1, "one"), Map.entry(2, "two"),
