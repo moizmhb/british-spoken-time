@@ -358,3 +358,42 @@ public class TimeService {
     }
 }
 ```
+
+## UML For Strategy & Factory Design Pattern
+               +----------------------------+
+               |      TimeFormatterStrategy |
+               +----------------------------+
+               | + formatTime(hour, minute) |
+               +-------------+--------------+
+                             ▲
+                    +--------------------+-
+                     |                    |                      
+            +------------------+  +------------------+  
+            | BritishTimeFormatter |  | GermanTimeFormatter  | 
+            +------------------+  +------------------+  
+            | + formatTime(...) |     | + formatTime(...) | 
+            +------------------+     +------------------+  
+
+                        ▲
+                        |
+            +--------------------------+
+            |   TimeFormatterFactory   |
+            +--------------------------+
+            | + getFormatter(locale)   |
+            +--------------------------+
+                        |
+                        ▼
+             +------------------------+
+             |     TimeService        |
+             +------------------------+
+             | + toSpokenTime(time)   |
+             | + toSpokenTime(h,m)    |
+             +------------------------+
+                        |
+                        ▼
+             +------------------------+
+             |     TimeController     |
+             +------------------------+
+             | + /spoken-time APIs    |
+             +------------------------+
+
